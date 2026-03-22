@@ -35,7 +35,7 @@ import { ApiService, Category } from '../../services/api';
 
         <mat-nav-list>
           @for (cat of categories(); track cat) {
-            <mat-list-item [activated]="cat === category()" class="my-2" [routerLink]="['/products', cat]">
+            <mat-list-item [activated]="cat === category()" class="my-2" [routerLink]="['/products', cat]" (click)="onCategorySelected()">
               <span matListItemTitle class="font-medium" [class]="cat === category() ? 'text-white': null">
                  {{ cat | titlecase }} 
               </span>
@@ -172,5 +172,11 @@ export default class ProductsGrid implements OnInit {
         console.error('Failed to load categories:', error);
       }
     });
+  }
+
+  onCategorySelected() {
+    if (this.isHandset) {
+      this.sidenavOpen = false;
+    }
   }
 }
