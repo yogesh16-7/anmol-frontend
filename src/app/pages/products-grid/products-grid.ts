@@ -1,10 +1,12 @@
-import { Component, computed, inject, input, signal, OnInit } from '@angular/core';
+import { Component, computed, HostListener, inject, input, signal, OnInit } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductCard } from "../../components/product-card/product-card";
 import { MatSidenavContainer, MatSidenavContent, MatSidenav } from "@angular/material/sidenav"
 import { MatNavList, MatListItem } from "@angular/material/list"
+import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { EcommerceStore } from '../../ecommerce-store';
 import { ToggleWishlistButton } from "../../components/toggle-wishlist-button/toggle-wishlist-button";
 import { ApiService, Category } from '../../services/api';
@@ -12,12 +14,14 @@ import { ApiService, Category } from '../../services/api';
 @Component({
   selector: 'app-products-grid',
   imports: [
+    CommonModule,
     ProductCard,
     MatSidenav,
     MatSidenavContainer,
     MatSidenavContent,
     MatNavList,
     MatListItem,
+    MatIcon,
     RouterLink,
     TitleCasePipe,
     ToggleWishlistButton
@@ -26,7 +30,7 @@ import { ApiService, Category } from '../../services/api';
   
   <mat-sidenav-container>
 
-    <mat-sidenav mode="side" opened="true"> 
+    <mat-sidenav [mode]="isHandset ? 'over' : 'side'" [opened]="!isHandset || sidenavOpen" (closedStart)="sidenavOpen = false"> 
       <div class="p-6">
         <h2 class="text-lg text-gray-900">Categories</h2>
 
@@ -43,7 +47,12 @@ import { ApiService, Category } from '../../services/api';
     </mat-sidenav>
 
     <mat-sidenav-content class="bg-gray-100 p-6 h-full">
-      <h1 class="text-2xl font-bold text-gray-900 mb-1"> {{ category() | titlecase }} </h1>
+      <div class="flex items-center justify-between mb-4">
+        <button mat-icon-button (click)="toggleSidenav()" *ngIf="isHandset">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="text-2xl font-bold text-gray-900 mb-1"> {{ category() | titlecase }} </h1>
+      </div>
       <p class="text-base text-gray-600 mb-6"> {{ store.filteredProducts().length }} Products found </p>
       <div class="responsive-grid">
         @for (product of store.filteredProducts(); track product.id) {
@@ -96,6 +105,29 @@ import { ApiService, Category } from '../../services/api';
     .mat-mdc-list-item.activated:hover {
       background-color: #2563eb;
     }
+
+    @media (max-width: 768px) {
+      mat-sidenav {
+        width: 100% !important;
+      }
+
+      mat-sidenav-content {
+        padding: 12px !important;
+      }
+
+      .responsive-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+      }
+
+      .p-6 {
+        padding: 12px !important;
+      }
+
+      .text-2xl {
+        font-size: 1.25rem;
+      }
+    }
   `],
 })
 export default class ProductsGrid implements OnInit {
@@ -105,8 +137,24 @@ export default class ProductsGrid implements OnInit {
   store = inject(EcommerceStore);
   api = inject(ApiService);
 
+  isHandset = window.innerWidth <= 768;
+  sidenavOpen = !this.isHandset;
+
   categories = signal<string[]>(['all']);
   
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const width = (event.target as Window).innerWidth;
+    this.isHandset = width <= 768;
+    if (!this.isHandset) {
+      this.sidenavOpen = true;
+    }
+  }
+
+  toggleSidenav() {
+    this.sidenavOpen = !this.sidenavOpen;
+  }
+
   ngOnInit() {
     this.store.loadProducts();
     this.loadCategories();
