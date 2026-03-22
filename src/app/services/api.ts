@@ -67,7 +67,7 @@ export interface OrderItem {
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'https://my-app-backend.onrender.com/api/v1';
+  private baseUrl = 'https://ecommerce-backend-xrnh.onrender.com/api/v1/products';
 
   constructor(private http: HttpClient) {}
 
