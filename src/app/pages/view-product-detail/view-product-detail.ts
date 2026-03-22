@@ -7,7 +7,7 @@ import { ProductInfo } from "./product-info/product-info";
   selector: 'app-view-product-detail',
   imports: [BackButton, ProductInfo],
   template: `
-    <div class="mx-auto max-w-[1200px] py-6">
+    <div class="mx-auto max-w-[1200px] py-6 px-4 sm:px-6">
 
       <app-back-button class="mb-6" [navigateTo]="backRoute()">Continue Shopping</app-back-button>
       @if(store.selectedProduct(); as product) {

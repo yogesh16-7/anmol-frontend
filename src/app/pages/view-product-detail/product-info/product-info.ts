@@ -13,7 +13,7 @@ import { StarRating } from "../../../components/star-rating/star-rating";
   selector: 'app-product-info',
   imports: [TitleCasePipe, StockStatus, QtySelector, MatButton, MatIcon, ToggleWishlistButton, MatIconButton, StarRating],
   template: `
-    <div class="text-xs rounded-xl bg-gray-100 px-2 py-1 w-fit mb-2">
+    <div class="text-xs text-left rounded-xl bg-gray-100 px-2 py-1 w-fit mb-2">
       {{ product().category | titlecase }}
     </div>
     <h1 class="text-2xl font-extrabold mb-3">{{ product().name }}</h1>
