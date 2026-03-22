@@ -5,8 +5,7 @@ import { MatSidenavContainer, MatSidenavContent, MatSidenav } from "@angular/mat
 import { MatNavList, MatListItem } from "@angular/material/list"
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { TitleCasePipe } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { TitleCasePipe, CommonModule } from '@angular/common';
 import { EcommerceStore } from '../../ecommerce-store';
 import { ToggleWishlistButton } from "../../components/toggle-wishlist-button/toggle-wishlist-button";
 import { ApiService, Category } from '../../services/api';
@@ -48,9 +47,7 @@ import { ApiService, Category } from '../../services/api';
 
     <mat-sidenav-content class="bg-gray-100 p-6 h-full">
       <div class="flex items-center justify-between mb-4">
-        <button mat-icon-button (click)="toggleSidenav()" *ngIf="isHandset">
-          <mat-icon>menu</mat-icon>
-        </button>
+        <button mat-icon-button (click)="toggleSidenav()" *ngIf="isHandset"><mat-icon>menu</mat-icon></button>
         <h1 class="text-2xl font-bold text-gray-900 mb-1"> {{ category() | titlecase }} </h1>
       </div>
       <p class="text-base text-gray-600 mb-6"> {{ store.filteredProducts().length }} Products found </p>

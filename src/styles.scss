@@ -188,6 +188,40 @@ mat-sidenav {
   border-right: none !important;
 }
 
+// Global responsive behavior
+@media (max-width: 768px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  .mat-toolbar,
+  .mat-toolbar-row,
+  .mat-toolbar-single-row {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .mat-sidenav-container,
+  .mat-drawer-container {
+    height: auto !important;
+  }
+
+  .mat-sidenav {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .mat-card {
+    margin: 0 0 1rem 0;
+  }
+
+  .responsive-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+}
+
 //Responsive grid
 .responsive-grid {
   display: grid;
