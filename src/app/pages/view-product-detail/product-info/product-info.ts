@@ -22,8 +22,8 @@ import { StarRating } from "../../../components/star-rating/star-rating";
     </app-star-rating>
     <p class="text-3xl font-extrabold mb-4">\${{ product().price }}</p>
     <app-stock-status class="mb-4" [inStock]="product().countInStock > 0" />
-    <p class="font-semibold mb-2">Description</p>
-    <p class="text-gray-600 border-b border-gray-200 pb-4">{{ product().description }}</p>
+    <p class="font-semibold mb-2">Rich Description</p>
+    <p class="text-gray-600 border-b border-gray-200 pb-4">{{ product().richDescription }}</p>
     <div class="flex items-center gap-2 mb-3 pt-4">
       <span class="font-semibold">Quantity:</span>
       <app-qty-selector [quantity]="quantity()" (qtyUpdated)="quantity.set($event)" />
